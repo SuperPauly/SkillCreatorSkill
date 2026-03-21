@@ -12,8 +12,12 @@ This repository is configured so Copilot Chat (Web) and Copilot Coding Agent (We
 
 - Place user-created skills under `skills/<new-skill-name>/`.
 - Keep `name` and `description` valid in YAML frontmatter.
+	- `name`: 1-64 chars, lowercase letters/numbers/hyphens only, no leading/trailing hyphen, no consecutive hyphens, and must match directory name.
+	- `description`: 1-1024 chars, explicit about what the skill does and when it should trigger.
+- Support optional frontmatter fields when relevant: `license`, `compatibility`, `metadata`, `allowed-tools` (experimental).
 - Make descriptions explicit about when the skill should trigger.
 - Create `references/`, `assets/`, and `evals/` only when they are needed.
+- Use relative file references from skill root and keep SKILL bodies concise (under ~500 lines / ~5000 tokens recommended).
 
 ## Web-first workflow
 

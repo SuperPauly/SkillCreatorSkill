@@ -68,6 +68,17 @@ Based on the user interview, fill in these components:
 - **compatibility**: Required tools, dependencies (optional, rarely needed)
 - **the rest of the skill :)**
 
+#### Frontmatter validation checklist (spec-aligned)
+
+Validate frontmatter fields before moving on:
+
+- `name` (required): 1-64 chars, lowercase letters/numbers/hyphens only, cannot start/end with `-`, cannot contain `--`, and must match the parent directory name.
+- `description` (required): 1-1024 chars, explicitly describing both what the skill does and when to use it.
+- `license` (optional): license identifier or reference to a bundled license file.
+- `compatibility` (optional): 1-500 chars if present; use for real environment requirements only.
+- `metadata` (optional): key/value map for extra metadata.
+- `allowed-tools` (optional, experimental): space-delimited list of pre-approved tools.
+
 ### Skill Writing Guide
 
 #### Anatomy of a Skill
@@ -77,25 +88,36 @@ skill-name/
 ├── SKILL.md (required)
 │   ├── YAML frontmatter (name, description required)
 │   └── Markdown instructions
-└── Bundled Resources (optional)
+├── Bundled Resources (optional)
     ├── scripts/    - Executable code for deterministic/repetitive tasks
     ├── references/ - Docs loaded into context as needed
     └── assets/     - Files used in output (templates, icons, fonts)
+└── evals/          - Optional eval set (`evals/evals.json`)
 ```
+
+Additional files/directories are allowed when useful.
 
 #### Progressive Disclosure
 
 Skills use a three-level loading system:
-1. **Metadata** (name + description) - Always in context (~100 words)
-2. **SKILL.md body** - In context whenever skill triggers (<500 lines ideal)
+1. **Metadata** (name + description) - Always in context at startup
+2. **SKILL.md body** - In context whenever skill triggers (<500 lines and <5000 tokens recommended)
 3. **Bundled resources** - As needed (unlimited, scripts can execute without loading)
 
-These word counts are approximate and you can feel free to go longer if needed.
+Use these as practical limits to keep context focused.
 
 **Key patterns:**
 - Keep SKILL.md under 500 lines; if you're approaching this limit, add an additional layer of hierarchy along with clear pointers about where the model using the skill should go next to follow up.
 - Reference files clearly from SKILL.md with guidance on when to read them
+- Use relative paths from skill root for file references (for example `references/REFERENCE.md`, `scripts/process.py`)
+- Keep reference chains shallow (prefer direct references from `SKILL.md`)
 - For large reference files (>300 lines), include a table of contents
+
+When available, validate finished skills with:
+
+```bash
+skills-ref validate ./my-skill
+```
 
 **Domain organization**: When a skill supports multiple domains/frameworks, organize by variant:
 ```
@@ -133,6 +155,18 @@ ALWAYS use this exact template:
 Input: Added user authentication with JWT tokens
 Output: feat(auth): implement JWT-based authentication
 ```
+
+### Script design requirements
+
+When using `scripts/`, prefer agent-friendly script interfaces:
+
+- No interactive prompts; accept input via flags, env vars, or stdin.
+- Provide `--help` with concise usage, options, and examples.
+- Prefer structured stdout (JSON/CSV/TSV) for parseable outputs.
+- Send diagnostics/progress/warnings to stderr.
+- Return actionable errors (what failed, expected values, what to try next).
+- Make operations idempotent where possible; agents may retry.
+- For risky operations, provide safer controls like `--dry-run` and explicit confirmation flags.
 
 ### Writing Style
 
