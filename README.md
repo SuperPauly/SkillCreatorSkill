@@ -4,7 +4,7 @@ This repository is a template for creating new skill repositories and using GitH
 
 The canonical specification is:
 
-- `skills/skill-creator/SKILL.md`
+- `.github/skills/skill-creator/SKILL.md`
 
 When this repository is opened in Copilot, all skill creation and refinement should follow that file.
 
@@ -13,15 +13,15 @@ When this repository is opened in Copilot, all skill creation and refinement sho
 1. Click **Use this template** on GitHub.
 2. Create your new repository from this template.
 3. Open your new repository and start Copilot Chat (Web) or Copilot Coding Agent (Web).
-4. Tell Copilot to use `skills/skill-creator/SKILL.md` as the source specification.
-5. Ask Copilot to generate your new skill under `skills/<new-skill-name>/`.
+4. Tell Copilot to use `.github/skills/skill-creator/SKILL.md` as the source specification.
+5. Ask Copilot to generate your new skill under `.github/skills/<new-skill-name>/`.
 
 ## Quickstart: Clone and Use with Copilot
 
 1. Clone this repository.
 2. Open it in a Copilot-enabled environment.
-3. Start Copilot Chat and request skill creation using `skills/skill-creator/SKILL.md`.
-4. Create or improve skills in `skills/<new-skill-name>/`.
+3. Start Copilot Chat and request skill creation using `.github/skills/skill-creator/SKILL.md`.
+4. Create or improve skills in `.github/skills/<new-skill-name>/`.
 
 ## Two Supported Copilot Workflows
 
@@ -46,16 +46,10 @@ Describe the skill directly, then ask Copilot to interview you for missing detai
 
 Copilot should generate new skills here:
 
-- `skills/<new-skill-name>/SKILL.md`
+- `.github/skills/<new-skill-name>/SKILL.md`
 
 Optional folders only when needed:
 
-- `skills/<new-skill-name>/references/`
-- `skills/<new-skill-name>/assets/`
-- `skills/<new-skill-name>/evals/`
-
-## Start Here Files
-
-- [START_HERE_COPILOT.md](START_HERE_COPILOT.md)
-- [.github/copilot-instructions.md](.github/copilot-instructions.md)
-- [CHECKLIST.md](CHECKLIST.md)
+- `.github/skills/<new-skill-name>/references/`
+- `.github/skills/<new-skill-name>/assets/`
+- `.github/skills/<new-skill-name>/evals/`
