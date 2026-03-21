@@ -53,3 +53,15 @@ Optional folders only when needed:
 - `.github/skills/<new-skill-name>/references/`
 - `.github/skills/<new-skill-name>/assets/`
 - `.github/skills/<new-skill-name>/evals/`
+
+## Post-setup cleanup (IMPORTANT)
+
+After you create your own skill(s) from this template, you can remove the template’s original skill-creation scaffolding.
+
+1. Go to the **Actions** tab in your repository.
+2. Run the **Delete template files only (manual)** workflow.
+3. Confirm the workflow completes successfully.
+
+This workflow removes the original skill-creator/template files and keeps only the skill content you created under `.github/skills/<your-skill-name>/`.
+
+> Recommended: run this only after you’ve verified your generated skill files are committed and correct.
