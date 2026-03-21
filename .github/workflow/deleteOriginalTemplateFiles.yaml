@@ -1,0 +1,59 @@
+name: Delete template files only (manual)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  delete-template-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v4
+
+      - name: Delete only files listed in manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          manifest=".github/template-files-manifest.txt"
+          if [[ ! -f "$manifest" ]]; then
+            echo "Manifest not found: $manifest"
+            exit 1
+          fi
+
+          echo "Deleting template files listed in $manifest ..."
+          while IFS= read -r path || [[ -n "$path" ]]; do
+            # Skip blanks/comments
+            [[ -z "${path// }" ]] && continue
+            [[ "$path" =~ ^# ]] && continue
+
+            # Only delete if it still exists
+            if [[ -e "$path" || -L "$path" ]]; then
+              rm -rf -- "$path"
+              echo "Deleted: $path"
+            else
+              echo "Not present (skipped): $path"
+            fi
+          done < "$manifest"
+
+          # Remove empty directories that may remain
+          find . -type d -empty -not -path './.git*' -delete || true
+
+      - name: Commit and push deletions
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "chore: remove template files from manifest"
+          git push
