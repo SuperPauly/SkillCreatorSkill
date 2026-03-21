@@ -1,0 +1,8 @@
+# One path per line, relative to repo root.
+# Include files and directories that are part of the template.
+# These are the only paths the workflow will ever delete.
+
+README.md
+src
+docs
+package.json
