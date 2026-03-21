@@ -40,7 +40,7 @@ Always namespace styles to a parent class unique to your component, e.g. `.sp-pr
 
 Design desktop first, then add mobile overrides.
 
-Recommended checkpoint breakpoints:
+Recommended breakpoints:
 
 - >= 1280px for desktop comfort checks
 - <= 768px for phone portrait behavior
