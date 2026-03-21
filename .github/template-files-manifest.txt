@@ -3,6 +3,9 @@
 # These are the only paths the workflow will ever delete.
 
 README.md
-src
-docs
-package.json
+.gitignore
+.github/copilot-instructions.md
+.github/workflows
+.github/skills/skill-creator
+.github/template-files-manifest.txt
+.devcontainer
