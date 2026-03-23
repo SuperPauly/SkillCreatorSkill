@@ -30,6 +30,16 @@ jobs:
             [[ -z "${path// }" ]] && continue
             [[ "$path" =~ ^# ]] && continue
 
+            # Ensure manifest paths are safe and repo-relative.
+            if [[ "$path" = /* || "$path" = ~* ]]; then
+              echo "Unsafe manifest path (must be repo-relative): $path"
+              exit 1
+            fi
+            if [[ "$path" == ".." || "$path" == ../* || "$path" == */../* || "$path" == *"/.." ]]; then
+              echo "Unsafe manifest path (parent traversal not allowed): $path"
+              exit 1
+            fi
+
             # Ensure every manifest entry is a file path (not directory).
             if [[ -d "$path" && ! -L "$path" ]]; then
               echo "Directory entries are not allowed in manifest: $path"

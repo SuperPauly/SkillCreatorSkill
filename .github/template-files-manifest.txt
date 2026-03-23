@@ -1,6 +1,6 @@
 # One path per line, relative to repo root.
 # List explicit file paths only (no directories/globs).
-# These are the tracked repository files as of this manifest revision.
+# Template cleanup file targets for this repository revision.
 
 .devcontainer/devcontainer.json
 .github/copilot-instructions.md
