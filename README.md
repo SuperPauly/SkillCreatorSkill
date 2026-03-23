@@ -53,6 +53,7 @@ Optional folders only when needed:
 - `.github/skills/<new-skill-name>/references/`
 - `.github/skills/<new-skill-name>/assets/`
 - `.github/skills/<new-skill-name>/evals/`
+- `.github/skills/<new-skill-name>/scripts/`
 
 ## Post-setup cleanup (IMPORTANT)
 
