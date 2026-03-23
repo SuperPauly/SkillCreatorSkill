@@ -1,11 +1,27 @@
 # One path per line, relative to repo root.
-# Include files and directories that are part of the template.
-# These are the only paths the workflow will ever delete.
+# List explicit file paths only (no directories/globs).
+# Template cleanup file targets for this repository revision.
 
-README.md
-.gitignore
+.devcontainer/devcontainer.json
 .github/copilot-instructions.md
-.github/workflows
-.github/skills/skill-creator
+.github/skills/skill-creator/SKILL.md
+.github/skills/skill-creator/agents/analyzer.md
+.github/skills/skill-creator/agents/comparator.md
+.github/skills/skill-creator/agents/grader.md
+.github/skills/skill-creator/assets/eval_review.html
+.github/skills/skill-creator/eval-viewer/generate_review.py
+.github/skills/skill-creator/eval-viewer/viewer.html
+.github/skills/skill-creator/references/schemas.md
+.github/skills/skill-creator/scripts/__init__.py
+.github/skills/skill-creator/scripts/aggregate_benchmark.py
+.github/skills/skill-creator/scripts/generate_report.py
+.github/skills/skill-creator/scripts/improve_description.py
+.github/skills/skill-creator/scripts/package_skill.py
+.github/skills/skill-creator/scripts/quick_validate.py
+.github/skills/skill-creator/scripts/run_eval.py
+.github/skills/skill-creator/scripts/run_loop.py
+.github/skills/skill-creator/scripts/utils.py
 .github/template-files-manifest.txt
-.devcontainer
+.github/workflows/deleteOriginalTemplateFiles.yaml
+.gitignore
+README.md
