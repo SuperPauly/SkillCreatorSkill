@@ -1,68 +1,149 @@
-# Copilot Skill Creator Template
+# 🧠 Copilot Skill Creator Template
 
-This repository is a template for creating new skill repositories and using GitHub Copilot Chat (Web) or GitHub Copilot Coding Agent (Web) to build skills.
+> A template repository for building new Copilot skills using **GitHub Copilot Chat (Web)** or the **Copilot Coding Agent (Web)**.
 
-The canonical specification is:
-
-- `.github/skills/skill-creator/SKILL.md`
+The canonical specification lives at:
+📄 `.github/skills/skill-creator/SKILL.md`
 
 When this repository is opened in Copilot, all skill creation and refinement should follow that file.
 
-## Quickstart: Use This Template
+---
+
+## ⚠️ GitHub Web Only — Not for CLI
+
+> **This template is designed exclusively for use with GitHub Copilot on the GitHub website.**  
+>  
+> It is **not** compatible with the GitHub Copilot CLI, VS Code Copilot Chat, or any other local/desktop Copilot interface.  
+>  
+> You must use one of the following on **github.com**:
+> - **Copilot Chat (Web)** — via the Copilot icon on your repository page
+> - **Copilot Coding Agent (Web)** — via Issues or the Copilot agent interface
+
+---
+
+## 🚀 Quickstart
+
+### Option A — Use This Template (Recommended)
 
 1. Click **Use this template** on GitHub.
 2. Create your new repository from this template.
-3. Open your new repository and start Copilot Chat (Web) or Copilot Coding Agent (Web).
+3. Open your new repo and start **Copilot Chat** or **Copilot Coding Agent** (Web).
 4. Tell Copilot to use `.github/skills/skill-creator/SKILL.md` as the source specification.
 5. Ask Copilot to generate your new skill under `.github/skills/<new-skill-name>/`.
 
-## Quickstart: Clone and Use with Copilot
+### Option B — Clone and Use Locally
 
 1. Clone this repository.
 2. Open it in a Copilot-enabled environment.
 3. Start Copilot Chat and request skill creation using `.github/skills/skill-creator/SKILL.md`.
 4. Create or improve skills in `.github/skills/<new-skill-name>/`.
 
-## Two Supported Copilot Workflows
+---
 
-### 1) Build from another repository
+## 🔌 MCP Servers — Supercharge Your Skill with External Tools
 
-Provide context from the target repository, then ask Copilot to convert that workflow into a skill:
+After using this template or cloning the project, you can connect **MCP (Model Context Protocol) servers** to your repository to give Copilot access to external documentation, APIs, and tools relevant to the skill you are building.
 
-- important files and folders
-- expected inputs and outputs
-- edge cases and constraints
+### What Are MCP Servers?
 
-### 2) Build from plain instructions
+MCP servers extend what Copilot can access during skill creation. For example, if you are building a skill around Gradio, HuggingFace, or a documented external library, adding the relevant MCP server means Copilot can pull in live documentation and context while generating your skill.
 
-Describe the skill directly, then ask Copilot to interview you for missing details:
+### How to Add MCP Servers to Your Project
 
-- what the skill does
-- when it should trigger
-- expected output format
-- constraints and edge cases
+1. Go to your repository on **github.com**.
+2. Click **Settings** → **Copilot** → **MCP Servers** (under the Coding agent section).
+3. Add your MCP configuration as JSON.
 
-## Required Output Structure
+### Example MCP Configuration
 
-Copilot should generate new skills here:
+The following example adds three useful MCP servers — **DeepWiki** (general repo/wiki knowledge), **Gradio Docs**, and **HuggingFace** (requires an API key secret):
 
-- `.github/skills/<new-skill-name>/SKILL.md`
+```json
+{
+  "mcpServers": {
+    "gradio": {
+      "type": "http",
+      "tools": ["*"],
+      "url": "https://gradio-docs-mcp.hf.space/gradio_api/mcp/"
+    },
+    "hf-mcp-server": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@huggingface/hf-mcp-server"],
+      "tools": ["*"],
+      "env": {
+        "HF_TOKEN": "$HF_READ"
+      }
+    },
+    "deepwiki": {
+      "type": "http",
+      "tools": ["*"],
+      "url": "https://mcp.deepwiki.com/mcp"
+    }
+  }
+}
+```
 
-Optional folders only when needed:
+### 🔑 HuggingFace API Key (Required for `hf-mcp-server`)
 
-- `.github/skills/<new-skill-name>/references/`
-- `.github/skills/<new-skill-name>/assets/`
-- `.github/skills/<new-skill-name>/evals/`
-- `.github/skills/<new-skill-name>/scripts/`
+The HuggingFace MCP server requires an API token stored as a repository secret:
 
-## Post-setup cleanup (IMPORTANT)
+1. Go to [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) and create a **Read** token.
+2. In your GitHub repository, go to **Settings** → **Secrets and variables** → **Actions**.
+3. Click **New repository secret**.
+4. Name it `HF_READ` and paste your HuggingFace token as the value.
 
-After you create your own skill(s) from this template, you can remove the template’s original skill-creation scaffolding.
+> 💡 Tip: Swap out or add MCP servers based on the skill you are building. For example, if your skill is about a specific framework or API, look for an MCP server that provides its documentation — this will significantly improve the quality of Copilot's output.
+
+---
+
+## 🔄 Two Supported Copilot Workflows
+
+| Workflow | Description |
+|---|---|
+| **Build from a repository** | Point Copilot at an existing repo to convert its workflow into a skill |
+| **Build from plain instructions** | Describe the skill in plain language; Copilot will ask clarifying questions |
+
+### 1️⃣ Build from Another Repository
+
+Provide Copilot with context from the target repository:
+- Important files and folders
+- Expected inputs and outputs
+- Edge cases and constraints
+
+### 2️⃣ Build from Plain Instructions
+
+Describe the skill directly and let Copilot interview you for missing details:
+- What the skill does
+- When it should trigger
+- Expected output format
+- Constraints and edge cases
+
+---
+
+## 📁 Required Output Structure
+
+Copilot will generate new skills under:
+
+```
+.github/skills/<new-skill-name>/
+├── SKILL.md          ← Required
+├── references/       ← Optional
+├── assets/           ← Optional
+├── evals/            ← Optional
+└── scripts/          ← Optional
+```
+
+---
+
+## 🧹 Post-Setup Cleanup
+
+> ⚠️ **Important:** Only run this after your generated skill files are committed and verified.
+
+Once your skill(s) are created, remove the template scaffolding:
 
 1. Go to the **Actions** tab in your repository.
 2. Run the **Delete template files only (manual)** workflow.
 3. Confirm the workflow completes successfully.
 
-This workflow removes the original skill-creator/template files and keeps only the skill content you created under `.github/skills/<your-skill-name>/`.
-
-> Recommended: run this only after you’ve verified your generated skill files are committed and correct.
+This removes the original `skill-creator/` template files and keeps only the skill content you created under `.github/skills/<your-skill-name>/`.
