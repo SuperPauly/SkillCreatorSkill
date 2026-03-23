@@ -31,7 +31,7 @@ jobs:
             [[ "$path" =~ ^# ]] && continue
 
             # Ensure manifest paths are safe and repo-relative.
-            if [[ "$path" == /* || "$path" =~ ^~ ]]; then
+            if [[ "$path" == /* || "$path" =~ ^~(/|$) ]]; then
               echo "Unsafe manifest path (must be repo-relative): $path"
               exit 1
             fi
